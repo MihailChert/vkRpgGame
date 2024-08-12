@@ -17,8 +17,8 @@ class BotApiMeta(type):
 
 class AbstractBotApi(metaclass=BotApiMeta):
 
-	def __init__(self):
-		self.current_user = None
+	def __init__(self, user):
+		self.current_user = user
 		self.keys = None
 		self.message = ''
 

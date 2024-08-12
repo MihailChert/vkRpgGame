@@ -1,5 +1,6 @@
-# import vk_api
-# from vk_api.longpoll import VkLongPoll, VkEventType
+import vk_api
+from vk_api.longpoll import VkLongPoll, VkEventType
+from bd_model import User, create_session
 
 class BotApiController:
 
@@ -20,7 +21,11 @@ class BotApiController:
 		self._bot = bot_session
 
 	def listen(self, event):
-		self.current_user = event.user_id
+		with create_session() as session:
+			self.current_user = session.query(User).get(event.user_id)
+			print(self.current_user)
+		if self.current_user is None:
+			self.current_user = event.user_id
 		self.__listeners[event.text].execute(event)
 
 	def send(message, keys=None):
