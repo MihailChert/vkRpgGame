@@ -1,5 +1,6 @@
 from .base import Base
-from sqlalchemy import Column, Integer, String, relationship
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
 
 
 class Buttle(Base):

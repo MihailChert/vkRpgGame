@@ -1,5 +1,6 @@
 from .base import IncrementBaseModel
-from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, relationship
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, SmallInteger, Interval
+from sqlalchemy.orm import relationship
 
 
 class Location(IncrementBaseModel):

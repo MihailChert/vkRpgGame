@@ -1,9 +1,10 @@
-from sqlalchemy import create_engine, MetaData
+from sqlalchemy import create_engine
 import atexit
+from sqlalchemy.orm import Session, sessionmaker
 
-
-engine = create_engine('sqllite://bases/test_db.db')
-metaData = MetaData()
+engine = create_engine('sqlite:///bd_model/bases/test_db.db')
+def close_database():
+	engine.dispose()
 atexit.register(close_database)
 
 from .user import User
@@ -17,5 +18,13 @@ from .lootfromenemies import LootFromEnemies
 from .playeritems import PlayerItem
 
 
-def close_database():
-	engine.dispose()
+def create_all():
+	from .base import Base
+	Base.metadata.create_all(engine)
+
+def create_session():
+	return sessionmaker(bind=engine)
+
+
+
+create_all()

@@ -1,5 +1,6 @@
-from .base import Base
-from sqlalchemy import Column, Integer, Enum, String, ForeignKey, relationship
+from .base import IncrementBaseModel
+from sqlalchemy import Column, Integer, Enum, String, ForeignKey
+from sqlalchemy.orm import relationship
 from enum import IntEnum, auto
 
 
@@ -16,4 +17,4 @@ class Group(IncrementBaseModel):
 	name = Column(String(20))
 	g_type = Column(Enum(GroupType), nullable=False, default=GroupType.buttle)
 	buttle = relationship('Buttle', uselist=False)
-	partyInt = Column(Integer, nullable=False, ForeignKey('User.Id'))
+	partyInt = Column(Integer, ForeignKey('User.Id'), nullable=False)

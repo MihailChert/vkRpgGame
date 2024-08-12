@@ -1,5 +1,7 @@
 from .base import IncrementBaseModel
-from sqlalchemy import Column, Integer, String, ForeignKey, relationsip, Text
+from sqlalchemy import Column, Integer, String, ForeignKey, Text
+from sqlalchemy.orm import relationship
+
 
 class Enemy(IncrementBaseModel):
 	__tablename__ = 'Enemy'
@@ -9,5 +11,5 @@ class Enemy(IncrementBaseModel):
 	resistence = Column(Text)
 	image = Column(Integer, ForeignKey('Attachments.Id'))
 	damage = Column(Integer, nullable=False)
-	loot = relationsip('LootFromEnemies')
-	locations = relationsip('EnemiesOnLocation')
+	loot = relationship('LootFromEnemies')
+	locations = relationship('EnemiesOnLocation')

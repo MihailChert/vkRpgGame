@@ -17,7 +17,7 @@ class BaseModel(Base):
 class IncrementBaseModel(Base):
 	__abstract__ = True
 
-	Id = Column(Integer, nullable=False, unique=True, primary_key=True, autoincremnet=True)
+	Id = Column(Integer, nullable=False, unique=True, primary_key=True, autoincrement=True)
 	created_at = Column(DateTime, nullable=False, default=datetime.now)
 	updated_at = Column(DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
 

@@ -1,5 +1,5 @@
 from .base import IncrementBaseModel
-from sqlalchemy import Column, String, relationsip
+from sqlalchemy import Column, String
 
 
 class Attachments(IncrementBaseModel):

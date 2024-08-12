@@ -1,5 +1,6 @@
 from .base import IncrementBaseModel
-from sqlalchemy import Column, Integer, String, Text, ForeignKey, relationship
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, SmallInteger
+from sqlalchemy.orm import relationship
 
 
 class PlayerItem(IncrementBaseModel):
