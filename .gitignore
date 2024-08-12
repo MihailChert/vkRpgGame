@@ -1,0 +1,4 @@
+bot-venv
+*.bak
+secret_env*
+*.bd
