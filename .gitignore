@@ -2,3 +2,4 @@ bot-venv
 *.bak
 secret_env*
 *.bd
+__pycache__
