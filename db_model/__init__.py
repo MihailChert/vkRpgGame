@@ -1,8 +1,9 @@
 from sqlalchemy import create_engine
 import atexit
 from sqlalchemy.orm import Session, sessionmaker
+import os
 
-engine = create_engine('sqlite:///bd_model/bases/test_db.db')
+engine = create_engine(os.environ['db_config_path'])
 def close_database():
 	engine.dispose()
 atexit.register(close_database)
@@ -16,6 +17,7 @@ from .location import Location
 from .locationtransitions import LocationTransitions
 from .lootfromenemies import LootFromEnemies
 from .playeritems import PlayerItem
+from .enemiesonlocation import EnemiesOnLocation
 
 
 def create_all():
@@ -23,7 +25,7 @@ def create_all():
 	Base.metadata.create_all(engine)
 
 def create_session():
-	return sessionmaker(bind=engine)
+	return Session(bind=engine)
 
 
 

@@ -7,5 +7,5 @@ class LocationTransitions(Base):
 
 
 	Id = Column(Integer, primary_key=True, nullable=False, unique=True)
-	locationIdFrom = Column(Integer, ForeignKey('Location.Id'))
-	locationIdTo = Column(Integer, ForeignKey('Location.Id'))
+	locationIdFrom = Column(Integer, nullable=False)
+	locationIdTo = Column(Integer, nullable=False)

@@ -11,5 +11,5 @@ class Enemy(IncrementBaseModel):
 	resistence = Column(Text)
 	image = Column(Integer, ForeignKey('Attachments.Id'))
 	damage = Column(Integer, nullable=False)
-	loot = relationship('LootFromEnemies')
-	locations = relationship('EnemiesOnLocation')
+	loot = relationship('LootFromEnemies', viewonly=True)
+	locations = relationship('EnemiesOnLocation', viewonly=True)

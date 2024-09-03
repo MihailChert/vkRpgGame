@@ -9,4 +9,4 @@ class Buttle(Base):
 	Id = Column(Integer, nullable=False, unique=True, primary_key=True)
 	path_to_session = Column(String(50), nullable=False)
 	group_id = Column(Integer, ForeignKey('Group.Id'))
-	group = relationship('Group')
+	group = relationship('Group', viewonly=True)
