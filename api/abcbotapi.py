@@ -9,7 +9,7 @@ class BotApiMeta(type):
 		try:
 			if (not hasattr(attrs['execute'], '__isabstractmethod__') or not attrs['execute'].__isabstractmethod__) and attrs.get('command') is not None:
 				BotApiMeta.__bot_command_controller__.add_listener(attrs['command'], self)
-				self.controller = self
+				self.controller = BotApiMeta.__bot_command_controller__
 		except KeyError:
 			pass
 		super().__init__(name, bases, attrs)
