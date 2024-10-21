@@ -17,7 +17,10 @@ class FakeApiController:
 		return cls.__instance
 
 	def add_listener(self, command, handler):
-		self.__listeners[command] = handler
+		if isinstance(self.__listeners.get(command), list):
+			self.__listeners[command].append(handler)
+		else:
+			self.__listeners[command] = [handler]
 
 	def set_bot_sesion(self, bot_session):
 		self._bot = bot_session
@@ -34,7 +37,11 @@ class FakeApiController:
 			command = event.text
 		else:
 			command = self.current_user.last_command + event.text
-		self.__listeners[command].execute(event)
+		for handler in self.__listeners[command]:
+			manager = handler(command, self.current_user)
+			if manager.is_executable():
+				manager.execute(event, command)
+				break
 		self._db_session.commit()
 		self._db_session.close()
 
