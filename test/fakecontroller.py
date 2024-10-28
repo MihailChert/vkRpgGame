@@ -14,6 +14,7 @@ class FakeApiController:
 			cls.__instance._bot = None
 			cls.__instance.resposns = {}
 			cls.__instance._db_session = None
+			cls.__instance.__redirect = None
 		return cls.__instance
 
 	def add_listener(self, command, handler):
@@ -25,6 +26,9 @@ class FakeApiController:
 	def get_db_session(self):
 		return self._db_session
 
+	def set_redirection(self, new_direct):
+		self.__redirect = new_direct
+
 	def listen(self, event):
 		self._db_session = create_session()
 		self.current_user = self._db_session.query(User).get(event.user_id)
@@ -35,7 +39,12 @@ class FakeApiController:
 		else:
 			command = self.current_user.last_command + event.text
 		self.__listeners[command].execute(event)
-		self._db_session.commit()
+		while self.__redirect is not None:
+			command = self.__redirect
+			self.__redirect = None
+			self.__listeners[command].execute(event)
+
+
 		self._db_session.close()
 
 	def send(message, keys=None):

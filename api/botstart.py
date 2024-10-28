@@ -12,5 +12,4 @@ class BotStart(AbstractBotApi):
 		session = cls.controller.get_db_session()
 		session.add(new_user)
 		session.commit()
-		session.close()
 			
