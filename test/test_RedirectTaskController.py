@@ -7,26 +7,40 @@ from api.abcbotapi import AbstractBotApi
 import pdb
 
 class StartRedirectPoint(AbstractBotApi):
-	command = 'тест перенаправления'
+	namespace = ''
 
-	@classmethod
-	def execute(cls, event):
+	def may_execute_request(self, request):
+		return request == 'тест перенаправления'
+	
+	def execute(self, event, command):
 		logging.debug('start redirect')
-		cls.controller.set_redirection('перенапревление')
+
+		self.controller.set_redirection('перенапревление')
 
 class EndRedirectPoint(AbstractBotApi):
-	command = 'перенапревление'
+	namespace = ''
 	_ex = False
 
-	@classmethod
-	def execute(cls, event):
+	def may_execute_request(self, request):
+		return request == 'перенапревление'
+
+	
+	def execute(self, event, command):
 		logging.debug('redirect success')
-		cls._ex = True
+		self.__class__._ex = True
 		return
 
 class TestRedirectController(unittest.TestCase):
+
 	def test_redirect(self):
 		event = FakeEvent(0, 'тест перенаправления')
 		controller = StartRedirectPoint.controller
 		controller.listen(event)
 		self.assertTrue(EndRedirectPoint._ex)
+
+	@classmethod
+	def tearDownClass(self):
+		controller = StartRedirectPoint.controller
+		listeners = getattr(controller, f'_{type(controller).__name__}__listeners')['']
+		listeners.remove(StartRedirectPoint)
+		listeners.remove(EndRedirectPoint)

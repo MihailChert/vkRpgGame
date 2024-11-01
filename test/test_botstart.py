@@ -15,7 +15,7 @@ class TestStart(unittest.TestCase):
 
 	def test_start(self):
 		controller = FakeApiController()
-		event = FakeEvent(1, BotStart.command)
+		event = FakeEvent(1, BotStart.namespace)
 		controller.listen(event)
 		query = controller.get_db_session().query(User)
 		query = query.all()
@@ -23,5 +23,3 @@ class TestStart(unittest.TestCase):
 		for i in query:
 			logging.debug(i)
 			self.assertTrue(i.Id)
-
-

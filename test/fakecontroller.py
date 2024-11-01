@@ -1,5 +1,6 @@
 from db_model import User, create_session
 from api.abcbotapi import BotApiMeta
+import pdb
 
 
 class FakeApiController:
@@ -18,7 +19,10 @@ class FakeApiController:
 		return cls.__instance
 
 	def add_listener(self, command, handler):
-		self.__listeners[command] = handler
+		if isinstance(self.__listeners.get(command), list):
+			self.__listeners[command].append(handler)
+		else:
+			self.__listeners[command] = [handler]
 
 	def set_bot_sesion(self, bot_session):
 		self._bot = bot_session
@@ -38,14 +42,24 @@ class FakeApiController:
 			command = event.text
 		else:
 			command = self.current_user.last_command + event.text
-		self.__listeners[command].execute(event)
+
+		self.__execute_command(event, command)
+
 		while self.__redirect is not None:
 			command = self.__redirect
 			self.__redirect = None
-			self.__listeners[command].execute(event)
-
+			self.__execute_command(event, command)
 
 		self._db_session.close()
+
+	def __execute_command(self, event, command):
+		namespace = command.split('/')[0]
+
+		for handler in self.__listeners.get(namespace, self.__listeners['']):
+			manager = handler(self.current_user, command)
+			if manager.is_executable():
+				manager.execute(event, command)
+				break
 
 	def send(message, keys=None):
 		self.resposns = {
