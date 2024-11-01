@@ -21,7 +21,7 @@ class TestStart(unittest.TestCase):
 		query = query.all()
 		self.assertTrue(len(query) >= 2)
 		for i in query:
-			logging.error(i)
+			logging.debug(i)
 			self.assertTrue(i.Id)
 
 
