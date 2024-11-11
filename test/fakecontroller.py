@@ -38,7 +38,6 @@ class FakeApiController:
 		self.current_user = self._db_session.query(User).get(event.user_id)
 		command = ''
 		if self.current_user is None:
-			self.current_user = event.user_id
 			command = event.text
 		else:
 			command = self.current_user.last_command + event.text
@@ -61,7 +60,7 @@ class FakeApiController:
 				manager.execute(event, command)
 				break
 
-	def send(message, keys=None):
+	def send(self, message, keys=None):
 		self.resposns = {
 		'user_id': self.current_user.Id,
 		'message': message,

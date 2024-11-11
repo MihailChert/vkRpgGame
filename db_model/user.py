@@ -8,7 +8,9 @@ class User(BaseModel):
 
 	location_id = Column(Integer, ForeignKey('Location.Id'))
 	location = relationship('Location', uselist=False)
+	nicname = Column(String(20))
 	items = Column(Text)
+	sex = Column(String(1))
 	health = Column(SmallInteger, nullable=False, default=100)
 	role = Column(String(20), nullable=False, default='beginer')
 	effect_status = Column(String(40))
