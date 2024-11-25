@@ -5,7 +5,6 @@ from fakecontroller import FakeApiController
 from fakeevent import FakeEvent
 from api.botstart import BotStart
 from db_model import User
-import logging
 import pdb
 
 class TestStart(unittest.TestCase):

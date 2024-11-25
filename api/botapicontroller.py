@@ -23,7 +23,6 @@ class BotApiController:
 	def listen(self, event):
 		session = create_session()
 		self.current_user = session.query(User).get(event.user_id)
-		print(self.current_user)
 		session.close()
 		if self.current_user is None:
 			self.current_user = event.user_id
