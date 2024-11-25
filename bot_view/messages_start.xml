@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bot_namespace namespace="">
+	<message path="Начать">
+		<text>Добро пожаловать в мир Забытых земель! Чтобы начать игру, необходимо зарегестрировать вашего персонажа.
+		</text>
+	</message>
+	<message path="Начать/Пол/">
+		<text>Пожалуйста выберите пол:</text>
+		<text ansver="change">Измените выбранный пол. Был выбран пол {sex}</text>
+		<buttons inline="True">
+			<button color="secondary">Женский</button>
+			<button color="secondary">Мужской</button>
+		</buttons>
+		<formates ansver="change">
+			<parameter name="sex" replace="user.sex"/>
+		</formates>
+		<buttons ansver="change" inline="True">
+			<button color="secondary">Женский</button>
+			<button color="secondary">Мужской</button>
+		</buttons>
+	</message>
+	<message path="Начать/Пол/Подтверждение/">
+		<text>Вы подтверждаете что ваш пол {sex}?</text>
+		<text ansver="error">Неверная команда. Подтвержаете ли вы свой пол {sex}?</text>
+		<formates>
+			<parameter name="sex" replace="user.sex"/>
+		</formates>
+		<formates ansver="error">
+			<parameter name="sex" replace="user.sex"/>
+		</formates>
+		<buttons inline="True">
+			<button color="positive">Подтвердить</button>
+			<button color="negative">Изменить</button>
+		</buttons>
+		<buttons inline="True" ansver="error">
+			<button color="positive">Подтвердить</button>
+			<button color="negative">Изменить</button>
+		</buttons>
+	</message>
+	<message path="Начать/Имя/">
+		<text>Теперь напишите ваше имя, пожалуйста, с заглавной буквы!</text>
+		<text ansver="change">Напешите другое имя. Выбраое имя было {nicname}</text>
+		<formates ansver="change">
+			<parameter name="nicname" replace="user.nicname"/>
+		</formates>
+	</message>
+	<message path="Начать/Имя/Подтверждение/">
+		<text>Ваше имя {nicname}?</text>
+		<text ansver="error">Неверная команда. Подтверждаете ли вы свое имя {nicname}?</text>
+		<formates>
+			<parameter name="nicname" replace="user.nicname"/>
+		</formates>
+		<formates ansver="error">
+			<parameter name="nicname" replace="user.nicname"/>
+		</formates>
+		<buttons inline="True">
+			<button color="positive">Подтвердить</button>
+			<button color="negative">Изменить</button>
+		</buttons>
+		<buttons inline="True" ansver="error">
+			<button color="positive">Подтвердить</button>
+			<button color="negative">Изменить</button>
+		</buttons>
+	</message>
+</bot_namespace>

@@ -1,5 +1,6 @@
 from .botapicontroller import BotApiController
 from abc import abstractmethod
+from sqlalchemy.exc import SQLAlchemyError
 
 class BotApiMeta(type):
 
@@ -45,3 +46,12 @@ class AbstractBotApi(metaclass=BotApiMeta):
 
 	def send(self):
 		self.controller.send_message(self.message, self.keys)
+
+	def try_commit_session(self, session):
+		try:
+			session.commit()
+			return True
+		except SQLAlchemyError as ex:
+			session.rollback()  # TODO: add login for the alchemy error
+			raise ex
+			return False
