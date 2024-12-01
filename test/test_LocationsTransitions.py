@@ -21,7 +21,6 @@ class LocationTransitions(unittest.TestCase):
 			session = create_session()
 			session.add(new_user)
 			user = session.query(User.Id).filter(User.Id == 20).one()
-			# pdb.set_trace()
 		except BaseException as err:
 			log.error(err, exc_info=True)
 

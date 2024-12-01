@@ -44,9 +44,6 @@ class AbstractBotApi(metaclass=BotApiMeta):
 	def execute(self, event, command):
 		pass
 
-	def send(self):
-		self.controller.send_message(self.message, self.keys)
-
 	def try_commit_session(self, session):
 		try:
 			session.commit()

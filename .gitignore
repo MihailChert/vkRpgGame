@@ -3,3 +3,4 @@ bot-venv
 secret_env*
 *.bd
 __pycache__
+*.db

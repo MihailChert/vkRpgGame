@@ -79,27 +79,30 @@ class RenderMessage:
 	
 	def get_keys(self):
 		path = self._find_path()
-		doc = xml.dom.minidom.parse(file)
+		doc = None
+		with open(path) as f:
+			doc = xml.dom.minidom.parse(f)
 		doc = self._find_element_by_name_and_attr(doc, 'message', 'path', self.path)
 		if self.ansver is None:
 			buttons_elem = doc.getElementsByTagName('buttons')
+			if(isinstance(buttons_elem, list) and len(buttons_elem)):
+				buttons_elem = buttons_elem[0]
 		else:
 			try:
-				buttons_elem = self._find_element_by_name_and_attr(doc, 'buttons', ansver, self.ansver)
+				buttons_elem = self._find_element_by_name_and_attr(doc, 'buttons', 'ansver', self.ansver)
 			except:
 				return VkKeyboard.get_empty_keyboard()
 		if not buttons_elem:
 			return VkKeyboard.get_empty_keyboard()
-
 		keys = VkKeyboard(one_time=(buttons_elem.getAttribute('one_time') == 'True'), inline=(buttons_elem.getAttribute('inline') == 'True'))
 		for button in buttons_elem.getElementsByTagName('button'):
-			key_color = button.attributes.get('color', 'secondary')
-			keys.add_button(button.firstChild.data, getattr(VkKeyboardColor, key_color))
-		return keys
+			key_color = button.attributes.get('color', 'secondary').value
+			keys.add_button(button.firstChild.data, getattr(VkKeyboardColor, key_color.upper()))
+		return keys.get_keyboard()
 
 	def get_message(self, view, command, ansver, **kwargs):
 		self.view = view
 		self.path = self._validate_path(command, ansver)
 		self.ansver = ansver
-		return self.get_text(kwargs), self.get_keys
+		return self.get_text(kwargs), self.get_keys()
 
