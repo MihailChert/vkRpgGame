@@ -5,6 +5,7 @@ import unittest.mock
 import logging
 from db_model import User, create_session, Location, LocationTransitions as LocTs
 from db_model.base import Base
+import pdb
 
 
 class event:
@@ -19,10 +20,14 @@ class LocationTransitions(unittest.TestCase):
 			new_user = User(Id=20, location_id=0)
 			session = create_session()
 			session.add(new_user)
-			session.commit()
-			session.close()
+			user = session.query(User.Id).filter(User.Id == 20).one()
 		except BaseException as err:
 			log.error(err, exc_info=True)
+
+		finally:
+			session.commit()
+			session.close()
+		self.assertEqual(user[0], 20)
 
 	def test_location(self):
 		from_ = Location(name='1')
@@ -37,5 +42,8 @@ class LocationTransitions(unittest.TestCase):
 		session.add_all(new_data)
 		session.commit()
 		query = from_.get_transitions(session)
-		logging.warning(query)
-		logging.warning(query.all())
+		logging.debug(query)
+		ansver = [2, 3]
+		for i in query.all():
+			self.assertTrue(i.Id in ansver)
+		logging.debug(query.all())
